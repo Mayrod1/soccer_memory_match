@@ -5,22 +5,64 @@ header{
 }
 .aside{
     height: 100vh;
-    width:25vw;
+    width:20vw;
     display: inline-block;
     float: left;
 }
-.container{
+.gameArea{
     display: inline-block;
-    width: 70vw;
+    width: 75vw;
     float: right;
+    position: relative;
+
+}
+.cardHolder{
+    width: 220px;
+    height: 150px;
+    margin: 20px;
+    position: relative;
+    perspective: 800px;
+    float: left;
+}
+.card{
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    -webkit-transform-style: preserve-3d;
+    -moz-transform-style: preserve-3d;
+    -ms-transform-style: preserve-3d;
+    transform-style: preserve-3d;
+    -webkit-transition: prop 1s;
+    -moz-transition: prop 1s;
+    -ms-transition: prop 1s;
+    -o-transition: prop 1s;
+    transition: 1s;
+}
+
+.back{
+    position: absolute;
+    -webkit-transform: rotateY(180deg);
+    -moz-transform: rotateY(180deg);
+    -ms-transform: rotateY(180deg);
+    -o-transform: rotateY(180deg);
+    transform: rotateY(180deg);
 
 }
 .card{
-    display: inline-block;
-    width: 225px;
-    height: 225px;
-    background-image: url(images/card-back.jpg);
-    background-size: 280px 240px;
-    margin-top: 10px;
-    border-radius: 25px;
+    -webkit-transform-origin: right center;
+    -moz-transform-origin: right center;
+    -ms-transform-origin: right center;
+    -o-transform-origin: right center;
+    transform-origin: right center;
+}
+.card img{
+    border-radius: 8px;
+    height: 100%;
+    width: 100%;
+    display: block;
+    position: absolute;;
+    backface-visibility: hidden;
+}
+.flipped {
+    transform: translateX( -100% ) rotateY( -180deg );
 }
