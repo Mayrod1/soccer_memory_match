@@ -3,8 +3,11 @@
 <head>
     <meta charset="UTF-8">
     <title>Soccer memory match</title>
-    <link rel="stylesheet" href="style.css">
+
     <script src="https://code.jquery.com/jquery-2.1.4.min.js"></script>
+    <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
+    <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
+    <link rel="stylesheet" href="style.css">
     <script src="main.js"></script>
 </head>
 <body>
@@ -14,9 +17,39 @@
 
 <aside class="aside">
     <h1>Stats</h1>
-
+    <div class="gamesPlayed">
+        <div class="label">Games Played</div>
+        <div class="value"></div>
+    </div>
+    <div class="attempts">
+        <div class="label">attempts</div>
+        <div class="value"></div>
+    </div>
+    <div class="accuracy">
+        <div class="label">Accuracy</div>
+        <div class="value"></div>
+    </div>
+    <button class="reset" type="button">Reset Game</button>
 </aside>
 <div class="gameArea">
+    <div class="cardHolder">
+        <div class="card">
+            <img class="front" src="images/card-back.jpg">
+            <img class="back" src="images/pique.jpg">
+        </div>
+    </div>
+    <div class="cardHolder">
+        <div class="card">
+            <img class="front" src="images/card-back.jpg">
+            <img class="back" src="images/messi_high_kick.jpg">
+        </div>
+    </div>
+    <div class="cardHolder">
+        <div class="card">
+            <img class="front" src="images/card-back.jpg">
+            <img class="back" src="images/pique.jpg">
+        </div>
+    </div>
     <div class="cardHolder">
         <div class="card">
             <img class="front" src="images/card-back.jpg">
@@ -71,25 +104,25 @@
             <img class="back" src="images/pique.jpg">
         </div>
     </div>
-    <div class="cardHolder">
-        <div class="card">
-            <img class="front" src="images/card-back.jpg">
-            <img class="back" src="images/pique.jpg">
-        </div>
-    </div>
-    <div class="cardHolder">
-        <div class="card">
-            <img class="front" src="images/card-back.jpg">
-            <img class="back" src="images/pique.jpg">
-        </div>
-    </div>
-    <div class="cardHolder">
-        <div class="card">
-            <img class="front" src="images/card-back.jpg">
-            <img class="back" src="images/pique.jpg">
-        </div>
-    </div>
 </div>
+    <!-- Modal -->
+    <div class="modal fade" id="myModal" role="dialog">
+        <div class="modal-dialog">
 
+            <!-- Modal content-->
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                </div>
+                <div class="modal-body">
+                    <p>You matched the cards!.</p>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                </div>
+            </div>
+
+        </div>
+    </div>
 </body>
 </html>

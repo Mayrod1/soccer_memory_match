@@ -3,6 +3,9 @@ header{
     height:20vh;
     text-align: center;
 }
+.label{
+    color: black;
+}
 .aside{
     height: 100vh;
     width:20vw;
