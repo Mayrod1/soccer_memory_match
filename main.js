@@ -3,7 +3,7 @@
  */
 var firstCardClicked = null;
 var secondCardClicked = null;
-var totalPossibleMatches = 6;
+var totalPossibleMatches = 10;
 var matchCounter = 0;
 var attempts = 0;
 var accuracy = 0;
