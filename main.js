@@ -11,14 +11,17 @@ var gamesPlayed = 0;
 var canCardsBeClicked = true;
 
 $(document).ready(function(){
+
+    $('.reset').click(function(){
+        resetStats();
+        displayStats();
+        make_cards();
+    });
+    make_cards();
     $('.card').click(function(){
         //console.log('document ready function:', this);
         flipCard(this);
     });
-    $('.reset').click(function(){
-        resetStats();
-        displayStats();
-    })
 });
 
 function flipCard(cardClicked) {
@@ -37,8 +40,8 @@ function flipCard(cardClicked) {
         console.log("second card clicked");
         secondCardClicked = cardClicked;
 
-        var firstCardImg = $(firstCardClicked).find('img.back').attr('src');
-        var secondCardImg = $(secondCardClicked).find('img.back').attr('src');
+        var firstCardImg = $(firstCardClicked).find('img.front').attr('src');
+        var secondCardImg = $(secondCardClicked).find('img.front').attr('src');
 
         if (firstCardImg == secondCardImg) {
             firstCardClicked = null;
@@ -82,5 +85,39 @@ function resetStats(){
     attempts = 0;
     gamesPlayed++;
     $(".card").removeClass('flipped');
+    $('.gameArea').html('');
 }
 
+function make_cards(){
+    //make copy of array, so you don't destroy the original array
+    var cardArray=["images/pique.jpg", "images/gotze.jpg", "images/ibrah.png", "images/messi.jpg", "images/di_maria.jpg", "images/neymar.jpg", "images/chicharito.jpg", "images/ronaldo1.jpg", "images/reus.jpg", "images/bale.jpg"];
+    var arrowArray= ["images/left_arrow.png", "images/down_arrow.png", "images/right_arrow.png", "images/up_arrow.png","images/left_arrow.png", "images/down_arrow.png", "images/right_arrow.png", "images/up_arrow.png","images/left_arrow.png", "images/right_arrow.png", "images/down_arrow.png","images/up_arrow.png","images/right_arrow.png", "images/up_arrow.png", "images/down_arrow.png", "images/right_arrow.png", "images/right_arrow.png","images/down_arrow.png", "images/right_arrow.png", "images/right_arrow.png"];
+    cardArray = cardArray.concat(cardArray);
+    //randomize the copy of the array
+    tempArray=[];
+    tempArrowArray=[];
+
+    while(cardArray.length>0){
+        tempArray.push(cardArray.splice(Math.floor(Math.random()*cardArray.length),1)[0]);
+        tempArrowArray.push(arrowArray.splice(Math.floor(Math.random()*arrowArray.length),1)[0]);
+    }
+        cardArray=tempArray;
+        arrowArray=tempArrowArray;
+
+    //loop through the array, and make 1 card per array element
+
+    for(var i=0; i<cardArray.length;i++) {
+
+
+        var outerDiv = $("<div>").addClass("cardHolder");
+        var cardDiv = $("<div>").addClass('card');
+        var backImg = $("<img>").addClass("back").attr("src", "images/card-back.jpg");//this is always the same
+        var frontImg = $("<img>").addClass("front").attr("src", cardArray[i]);  //this one is taken from the cardArray
+        var arrowImg = $("<img>").addClass("front").attr("src", arrowArray[i]); //taken from the arrow array
+        //add the array's string into the source of the front card image
+        //add the card to the dom
+        cardDiv.append(frontImg,arrowImg, backImg);
+        outerDiv.append(cardDiv);
+        $('.gameArea').append(outerDiv);
+    }
+}

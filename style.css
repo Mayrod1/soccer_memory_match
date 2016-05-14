@@ -52,7 +52,7 @@ h1{
     transition: 1s;
 }
 
-.back{
+.front{
     position: absolute;
     -webkit-transform: rotateY(180deg);
     -moz-transform: rotateY(180deg);
