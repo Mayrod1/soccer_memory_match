@@ -51,7 +51,9 @@ h1{
     -o-transition: prop 1s;
     transition: 1s;
 }
-
+.back{
+    opacity: .4;
+}
 .front{
     position: absolute;
     -webkit-transform: rotateY(180deg);
@@ -74,7 +76,7 @@ h1{
     width: 100%;
     display: block;
     position: absolute;;
-    backface-visibility: hidden;
+    #backface-visibility: hidden;
 }
 .flipped {
     transform: translateX( -100% ) rotateY( -180deg );

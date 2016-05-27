@@ -16,6 +16,10 @@ $(document).ready(function(){
         resetStats();
         displayStats();
         make_cards();
+        $('.card').click(function(){
+            //console.log('document ready function:', this);
+            flipCard(this);
+        });
     });
     make_cards();
     $('.card').click(function(){
@@ -27,6 +31,9 @@ $(document).ready(function(){
 function flipCard(cardClicked) {
     //console.log("flip card function this:", this);
     if(canCardsBeClicked !== true){
+        return;
+    }
+    if($(cardClicked).hasClass('flipped')){
         return;
     }
     //console.log('blah', blah);
@@ -44,6 +51,8 @@ function flipCard(cardClicked) {
         var secondCardImg = $(secondCardClicked).find('img.front').attr('src');
 
         if (firstCardImg == secondCardImg) {
+            make_draggable(firstCardClicked);
+            make_draggable(secondCardClicked);
             firstCardClicked = null;
             matchCounter++;
             console.log('match counter=', matchCounter);
@@ -85,7 +94,7 @@ function resetStats(){
     attempts = 0;
     gamesPlayed++;
     $(".card").removeClass('flipped');
-    $('.gameArea').html('');
+    $('.gameArea').text('');
 }
 
 function make_cards(){
@@ -113,11 +122,34 @@ function make_cards(){
         var cardDiv = $("<div>").addClass('card');
         var backImg = $("<img>").addClass("back").attr("src", "images/card-back.jpg");//this is always the same
         var frontImg = $("<img>").addClass("front").attr("src", cardArray[i]);  //this one is taken from the cardArray
-        var arrowImg = $("<img>").addClass("front").attr("src", arrowArray[i]); //taken from the arrow array
+        var arrowImg = $("<img>").addClass("front arrow").attr("src", arrowArray[i]); //taken from the arrow array
         //add the array's string into the source of the front card image
         //add the card to the dom
         cardDiv.append(frontImg,arrowImg, backImg);
         outerDiv.append(cardDiv);
         $('.gameArea').append(outerDiv);
     }
+}
+
+// get src code
+//
+function make_draggable(element) {
+    console.log("running draggable");
+    $(element).css("transition-duration","0s");
+    $(element).draggable({revert:true});
+    $(element).droppable({
+        drop: function( event, ui ) {
+
+            var a =$(event.target).find("img.front").attr("src");
+            var b= $(event.target).find("img.arrow").attr("src");
+            var a2 =$(ui.draggable).find("img.front").attr("src");
+            var b2= $(ui.draggable).find("img.arrow").attr("src");
+            $(event.target).find("img.front").attr("src",a2);
+            $(event.target).find("img.arrow").attr("src", b2);
+            $(ui.draggable).find("img.front").attr("src", a);
+            $(ui.draggable).find("img.arrow").attr("src", b);
+            console.log(event);
+
+        }
+    });
 }
