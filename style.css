@@ -2,13 +2,16 @@
 body{
     background-image: url(images/stadium2.jpg);
     background-size: cover;
-    width: 1490px;
+    width:100vw;
+    height: 100vh;
     background-repeat: no-repeat;
+    background-position: bottom;
+    font-size: 2vh;
 }
 header{
     #border: dashed black 1px;
     width: 100%;
-    height:27vh;
+    height:13vh;
     display: inline-block;
     position: relative;
     text-align: center;
@@ -23,9 +26,14 @@ header div{
 }
 header h1{
     font-family: 'Faster One', cursive;
+    font-size: 200%;
+}
+header h1, header h2{
+    margin: 0;
 }
 header div h2{
     font-family: 'Faster One', cursive;
+    font-size: 150%;
 }
 .label{
     color: black;
@@ -38,23 +46,24 @@ header div h2{
 /*}*/
 .gameArea{
     display: inline-block;
-    width: 85vw;
+    width: 85%;
+    height: 82%;
     *float: right;
     position: relative;
 
 }
 .cardHolder{
-    width: 210px;
-    height: 160px;
-    margin: 15px;
+    width: 20%;
+    height: 25%;
     position: relative;
     perspective: 800px;
     float: left;
 }
 .card{
-    width: 100%;
-    height: 100%;
-    position: absolute;
+    width: 90%;
+    height: 90%;
+    position: relative;
+    margin: 0 auto;
     -webkit-transform-style: preserve-3d;
     -moz-transform-style: preserve-3d;
     -ms-transform-style: preserve-3d;
@@ -95,11 +104,14 @@ header div h2{
 .flipped {
     transform: translateX( -100% ) rotateY( -180deg );
 }
-.path_show{
-    box-shadow: 10px 10px 10px #006600;
+.path_show .card{
+    box-shadow: 1em 1em 1em #006600;
 }
-.path_wrong{
-    box-shadow: 10px 10px 10px red;
+.path_wrong .card{
+    box-shadow: 1em 1em 1em red;
+}
+.path_wrong .flipped.card{
+    box-shadow: -1em 1em 1em red;
 }
 .float_text{
     position: absolute;
@@ -134,18 +146,24 @@ header div h2{
     }
 }
 #ball img{
-    height: 95px;
-   width: 95px;
+    height: 10vh;
+   width: 10vh;
 }
 #goal_net{
-    width: 5%;
+    width: 15%;
+    height:100%;
     display: inline-block;
     position: absolute;
-    top: 82%;
+    bottom: 0%;
+    z-index: 5;
+}
+#goal_net img{
+    position: absolute;;
+    bottom: 0%;
 }
 #ball{
     position: absolute;
     z-index: +3;
-    top: 90px;
-    left: 2px;
+    top: 2%;
+    left: 1%;
 }

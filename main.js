@@ -10,27 +10,25 @@ var accuracy = 0;
 var gamesPlayed = 0;
 var canCardsBeClicked = true;
 var card_positions = [];
+var ball_start_position;
 
 $(document).ready(function(){
 
     $('.reset').click(function(){
         resetStats();
-        displayStats();
-        make_cards();
-        check_arrows();
-        $('.card').click(function(){
-            //console.log('document ready function:', this);
-            flipCard(this);
-
-        });
+        initialize_game();
     });
+    initialize_game();
+});
+function initialize_game(){
+    displayStats();
     make_cards();
     $('.card').click(function(){
         //console.log('document ready function:', this);
         flipCard(this);
     });
-});
-
+    ball_start_position = $('#ball').position();
+}
 function flipCard(cardClicked) {
     //console.log("flip card function this:", this);
     $('.path_show, .path_wrong').removeClass('path_show path_wrong');
@@ -55,9 +53,10 @@ function flipCard(cardClicked) {
         var secondCardImg = $(secondCardClicked).find('img.front').attr('src');
 
         if (firstCardImg == secondCardImg) {
-            check_arrows();
+
             make_draggable(firstCardClicked);
             make_draggable(secondCardClicked);
+            check_arrows();
             firstCardClicked = null;
             matchCounter++;
             console.log('match counter=', matchCounter);
@@ -93,14 +92,6 @@ function displayStats(){
     $('.accuracy .value').text(accuracy + '%');
 }
 
-function resetStats(){
-    accuracy = 0;
-    matchCounter = 0;
-    attempts = 0;
-    gamesPlayed++;
-    $(".card").removeClass('flipped');
-    $('.gameArea').text('');
-}
 var arrows = {"images/left_arrow.png": {y:0,x:-1},"images/right_arrow.png":{y:0,x:1},"images/up_arrow.png":{y:-1,x:0},"images/down_arrow.png":{y:1,x:0}};
 function check_arrows() {
     //start at position 0,0
@@ -117,60 +108,69 @@ function check_arrows() {
             console.log('out of bounds',error);
         }
         if ((x == 5 && y == 1)||(x == 5 && y == 2)) {
-            animateBall();
-            win_game();
-            return;
+            touched_cards.push($("#goal_net img"));
+            animateBall(touched_cards);
+            cont=false;
         }
-        if ((x < 0 || x > 4) || (y < 0 || y > 3)) {
+        else if ((x < 0 || x > 4) || (y < 0 || y > 3)) {
             console.log("out of bounds");
             touched_cards[touched_cards.length-1].removeClass('path_show');
             float_message('Out of bounds!',touched_cards[touched_cards.length-1]);
             wrong_path(touched_cards[touched_cards.length-1],'whistle');
-            return;
+            cont=false;
         }
-        if (!card_positions[y][x].find('.card').hasClass('flipped')) {
+        else if (!card_positions[y][x].find('.card').hasClass('flipped')) {
             float_message('Invalid player! (receiving card must be matched',card_positions[y][x]);
             wrong_path(card_positions[y][x]);
             console.log("card not flipped");
-            return;
+            cont=false;
         }
-        if(touched_cards.indexOf(card_positions[y][x])!=-1){
+        else if(touched_cards.indexOf(card_positions[y][x])!=-1){
             console.log('overlapping path, quitting');
             float_message('Invalid player! (can\'t go to the same player twice',card_positions[y][x]);
             wrong_path(card_positions[y][x]);
-            return;
+            cont=false;
         }
+        if(cont) {
+            card_positions[y][x].addClass('path_show');
+            //find the current card based on position
+            //get the arrow label based on the current card
+            //look up that label and get the vector
+            //use that vector to update x and y
+            touched_cards.push(card_positions[y][x]);
+            var vector = card_positions[y][x].find("img.arrow").attr("src");
+            var current_vector = arrows[vector];
 
-        card_positions[y][x].addClass('path_show');
-        //find the current card based on position
-        //get the arrow label based on the current card
-        //look up that label and get the vector
-        //use that vector to update x and y
-        touched_cards.push(card_positions[y][x]);
-        var vector = card_positions[y][x].find("img.arrow").attr("src");
-        var current_vector = arrows[vector];
-
-        y = y + current_vector.y;
-        x = x + current_vector.x;
-        console.log("vector:", current_vector);
-
+            y = y + current_vector.y;
+            x = x + current_vector.x;
+            console.log("vector:", current_vector);
+        }
     }
-    var position= 0;
-// make a function no params.
-
-    function animateBall(){
-        $('#ball').animate( {
-            left:card_positions[position][x] + 'px',
-            top:card_positions[position][y] + 'px'
-        },2000, function(){
-            position++;
-            if(card_positions.length!==position){
-                animateBall();
-            }
-        });
-    }
+    //animateBall(touched_cards);
 }
+var position= 0;
 
+function animateBall(cards, continuing){
+    if(continuing==undefined){
+        position = 0;
+    }
+    if(cards.length<2){
+        return;
+    }
+    var card_position = cards[position].offset();
+    $('#ball').animate( {
+        left:card_position.left +cards[position].width()/2+ 'px',
+        top:card_position.top + +cards[position].height()/2+'px'
+    },1000, function(){
+        position++;
+        if(cards.length!==position){
+            animateBall(cards,true);
+        }
+        else{
+            win_game()
+        }
+    });
+}
 
 function float_message(message, card){
     var floater = $("<div>",{
@@ -242,9 +242,17 @@ function make_cards(){
 function make_draggable(element) {
     console.log("running draggable");
     $(element).css("transition-duration","0s");
-    $(element).draggable({revert:true});
+    $(element).draggable({
+        revert:true,
+        stop: function(){
+            //console.log('draggable stop');
+            check_arrows();
+        }
+
+    });
     $(element).droppable({
         drop: function( event, ui ) {
+            console.log('dropped');
             var a =$(event.target).find("img.front").attr("src");
             var b= $(event.target).find("img.arrow").attr("src");
             var a2 =$(ui.draggable).find("img.front").attr("src");
@@ -255,7 +263,17 @@ function make_draggable(element) {
             $(ui.draggable).find("img.front").attr("src", a);
             $(ui.draggable).find("img.arrow").attr("src", b);
 
-            check_arrows();
         }
     });
+}
+
+function resetStats(){
+    accuracy = 0;
+    matchCounter = 0;
+    attempts = 0;
+    gamesPlayed++;
+    $(".card").removeClass('flipped');
+    $('.gameArea').text('');
+    card_positions = [];
+    $('#ball').css(ball_start_position);
 }
