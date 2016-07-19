@@ -38,12 +38,6 @@ header div h2{
 .label{
     color: black;
 }
-/*.aside{*/
-    /*height: 100vh;*/
-    /*width:20vw;*/
-    /*display: inline-block;*/
-    /*float: left;*/
-/*}*/
 .gameArea{
     display: inline-block;
     width: 85%;
@@ -74,9 +68,9 @@ header div h2{
     -o-transition: prop 1s;
     transition: 1s;
 }
-.back{
-    opacity: .4;
-}
+/*.back{*/
+    /*opacity: .4;*/
+/*}*/
 .front{
     position: absolute;
     -webkit-transform: rotateY(180deg);
@@ -99,7 +93,7 @@ header div h2{
     width: 100%;
     display: block;
     position: absolute;;
-    #backface-visibility: hidden;
+    backface-visibility: hidden;
 }
 .flipped {
     transform: translateX( -100% ) rotateY( -180deg );
@@ -154,12 +148,12 @@ header div h2{
     height:100%;
     display: inline-block;
     position: absolute;
-    bottom: 0%;
+    bottom: 0;
     z-index: 5;
 }
 #goal_net img{
     position: absolute;;
-    bottom: 0%;
+    bottom: 2%;
 }
 #ball{
     position: absolute;

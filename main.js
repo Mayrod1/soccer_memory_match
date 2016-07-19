@@ -107,7 +107,7 @@ function check_arrows() {
         catch(error){
             console.log('out of bounds',error);
         }
-        if ((x == 5 && y == 1)||(x == 5 && y == 2)) {
+        if ((x == 5 && y == 3)||(x == 5 && y == 2)) {
             touched_cards.push($("#goal_net img"));
             animateBall(touched_cards);
             cont=false;
