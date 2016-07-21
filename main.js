@@ -203,7 +203,7 @@ function wrong_path(card,type){
 }
 function make_cards(){
     //make copy of array, so you don't destroy the original array
-    var cardArray=["images/pique.jpg", "images/gotze.jpg", "images/ibrah.png", "images/messi.jpg", "images/di_maria.jpg", "images/neymar.jpg", "images/chicharito.jpg", "images/ronaldo1.jpg", "images/reus.jpg", "images/bale.jpg"];
+    var cardArray=["images/pique.jpg", "images/gotze.jpg", "images/Ibrah.png", "images/messi.jpg", "images/di_maria.jpg", "images/neymar.jpg", "images/chicharito.jpg", "images/ronaldo1.jpg", "images/reus.jpg", "images/bale.jpg"];
     var arrowArray= ["images/left_arrow.png", "images/down_arrow.png", "images/right_arrow.png", "images/up_arrow.png","images/left_arrow.png", "images/down_arrow.png", "images/right_arrow.png", "images/up_arrow.png","images/left_arrow.png", "images/right_arrow.png", "images/down_arrow.png","images/up_arrow.png","images/right_arrow.png", "images/up_arrow.png", "images/down_arrow.png", "images/right_arrow.png", "images/right_arrow.png","images/down_arrow.png", "images/right_arrow.png", "images/right_arrow.png"];
     cardArray = cardArray.concat(cardArray);
     //randomize the copy of the array
